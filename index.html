@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katakana Kawaii Master</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Noto+Sans+JP:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --kawaii-pink: #ffafcc;
+            --kawaii-blue: #a2d2ff;
+            --kawaii-yellow: #ffea00;
+            --kawaii-purple: #cdb4db;
+            --kawaii-green: #b9fbc0;
+        }
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background-color: #fdfcf0;
+            background-image: radial-gradient(#ffafcc 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
+        }
+        .japanese-font {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+        .manga-border {
+            border: 4px solid #333;
+            box-shadow: 6px 6px 0px #333;
+        }
+        .speech-bubble {
+            position: relative;
+            background: white;
+            border-radius: 20px;
+            border: 3px solid #333;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            border-width: 0 15px 15px;
+            border-style: solid;
+            border-color: #333 transparent;
+            display: block;
+            width: 0;
+        }
+        .btn-bounce:hover {
+            transform: scale(1.02) rotate(-1deg);
+        }
+        .btn-bounce:active {
+            transform: scale(0.98);
+        }
+        .gradient-header {
+            background: linear-gradient(180deg, var(--kawaii-pink) 0%, #ff85a1 100%);
+        }
+        .char-card {
+            transition: all 0.2s ease;
+        }
+        .char-card:hover {
+            background-color: var(--kawaii-yellow);
+            transform: translateY(-3px);
+        }
+        .floating-kawaii {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-pop {
+            animation: pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-12">
+
+    <!-- Header -->
+    <header class="gradient-header text-white pt-10 pb-14 px-4 shadow-md mb-[-20px] text-center border-b-4 border-black/10">
+        <div class="flex justify-center items-center gap-4 mb-2">
+            <span class="text-4xl animate-bounce">🐱</span>
+            <h1 class="text-4xl md:text-5xl font-black tracking-tight" style="text-shadow: 3px 3px 0px rgba(0,0,0,0.1);">カタカナ MASTER</h1>
+            <span class="text-4xl animate-bounce" style="animation-delay: 0.2s">🐰</span>
+        </div>
+        <p class="text-xl font-semibold opacity-90 italic">Word een Katakana Ninja! ✨</p>
+    </header>
+
+    <main id="app" class="max-w-2xl mx-auto px-4 relative z-10">
+        
+        <!-- Menu Selectie -->
+        <div id="menu" class="space-y-4 pt-6">
+            <div class="bg-white p-4 rounded-full manga-border text-center mb-6 relative">
+                <div class="absolute -top-6 -left-4 text-4xl floating-kawaii">🍙</div>
+                <h2 class="text-2xl font-bold text-gray-800 uppercase tracking-tighter">Kies je Missie! 🚀</h2>
+                <div class="absolute -bottom-4 -right-4 text-4xl floating-kawaii" style="animation-delay: 0.5s">🦖</div>
+            </div>
+            
+            <button onclick="showAlphabet()" class="w-full bg-[#b9fbc0] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-green-800">Module 0: Alfabet Gids</span>
+                    <span class="text-green-700 font-medium text-sm">Alle tekens & ezelsbruggetjes</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">📘</div>
+            </button>
+
+            <button onclick="startModule('signs')" class="w-full bg-[#fcd5ce] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-orange-900">Module 1: Uithangborden</span>
+                    <span class="text-orange-800 font-medium text-sm">Wat zie je op straat? (Ramen!)</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">🏮</div>
+            </button>
+
+            <button onclick="startModule('basic')" class="w-full bg-[#ffcfd2] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-red-800">Module 2: Eten & Drinken</span>
+                    <span class="text-red-700 font-medium text-sm">Lekkere snacks & menu's</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">🍟</div>
+            </button>
+
+            <button onclick="startModule('lifestyle')" class="w-full bg-[#fcf6bd] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-yellow-800">Module 3: Lifestyle & Gadgets</span>
+                    <span class="text-yellow-700 font-medium text-sm">Technologie & Dagelijks leven</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">📱</div>
+            </button>
+
+            <button onclick="startModule('dakuten')" class="w-full bg-[#cfbaf0] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-purple-800">Module 4: Dakuten & Maru</span>
+                    <span class="text-purple-700 font-medium text-sm">Met de " en ° klanken</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">🥤</div>
+            </button>
+
+            <button onclick="startModule('combo')" class="w-full bg-[#98f5e1] p-4 rounded-2xl manga-border btn-bounce transition-all flex items-center justify-between group">
+                <div class="text-left">
+                    <span class="block text-xl font-black text-teal-800">Module 5: Combinaties</span>
+                    <span class="text-teal-700 font-medium text-sm">Kleine letters (Sho! Cha!)</span>
+                </div>
+                <div class="bg-white p-2 rounded-full text-2xl">🎮</div>
+            </button>
+        </div>
+
+        <!-- Alfabet Overzicht -->
+        <div id="alphabet-module" class="hidden">
+            <div class="flex justify-between items-center mb-6 pt-4">
+                <button onclick="showMenu()" class="bg-white border-2 border-black px-4 py-2 rounded-xl font-bold hover:bg-gray-100 flex items-center shadow-[4px_4px_0px_#000]">
+                    ← Menu
+                </button>
+                <div class="text-pink-600 font-black text-xl uppercase italic">Scroll 📜</div>
+            </div>
+            
+            <div id="alphabet-container" class="grid grid-cols-5 gap-3 bg-white p-6 rounded-3xl manga-border mb-8">
+                <!-- Wordt gevuld door JS -->
+            </div>
+
+            <div id="char-detail" class="hidden animate-pop relative">
+                <div class="absolute -top-10 right-4 text-5xl floating-kawaii">🍮</div>
+                <div class="bg-[#fcf6bd] p-8 rounded-3xl border-4 border-black shadow-[8px_8px_0px_#333]">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <div class="relative">
+                            <div id="detail-char" class="japanese-font text-9xl font-bold text-gray-800 bg-white border-4 border-black w-32 h-32 flex items-center justify-center rounded-2xl shadow-lg">ア</div>
+                        </div>
+                        <div class="flex-1 text-center md:text-left">
+                            <div id="detail-romaji" class="text-5xl font-black text-black uppercase mb-4 italic tracking-widest">A</div>
+                            <div class="space-y-4">
+                                <div class="bg-white p-3 rounded-xl border-2 border-black/20">
+                                    <span class="text-xs font-black text-blue-500 uppercase block mb-1">🇳🇱 Nederlands</span>
+                                    <p id="detail-mnemonic-nl" class="text-gray-800 text-lg font-semibold leading-tight"></p>
+                                </div>
+                                <div class="bg-white/50 p-3 rounded-xl border-2 border-black/10 italic">
+                                    <span class="text-xs font-black text-red-500 uppercase block mb-1">🇺🇸 English</span>
+                                    <p id="detail-mnemonic-en" class="text-gray-600 text-lg font-medium leading-tight"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Oefen Module Interface -->
+        <div id="practice-module" class="hidden pt-4">
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="showMenu()" class="bg-white border-2 border-black px-4 py-2 rounded-xl font-bold shadow-[4px_4px_0px_#000]">Stop</button>
+                <div class="bg-yellow-300 border-2 border-black px-4 py-1 rounded-full font-black text-sm" id="progress-text">1 / 10</div>
+            </div>
+
+            <div class="bg-white rounded-[40px] manga-border p-8 md:p-10 text-center relative overflow-hidden">
+                <div class="absolute top-4 left-4 text-4xl floating-kawaii">✨</div>
+                <div class="absolute top-4 right-4 text-4xl floating-kawaii" style="animation-delay: 1s">🍡</div>
+
+                <div id="katakana-word" class="japanese-font text-5xl md:text-7xl font-bold text-gray-800 mb-8 md:mb-10 tracking-[0.1em]" style="text-shadow: 4px 4px 0px #eee;">パン</div>
+                
+                <div id="romaji-container" class="flex justify-center flex-wrap gap-2 md:gap-3 mb-6 min-h-[60px]"></div>
+                
+                <div id="translation-container" class="opacity-0 transition-all duration-500 transform translate-y-4 mb-8">
+                    <div class="inline-block bg-purple-500 text-white px-6 py-2 rounded-full text-2xl font-black border-4 border-black shadow-[4px_4px_0px_#000]" id="translation-text">Brood</div>
+                </div>
+
+                <div class="space-y-4 relative z-10">
+                    <button id="reveal-btn" onclick="revealNext()" class="w-full bg-[#a2d2ff] hover:bg-[#8ecae6] text-black font-black py-4 rounded-2xl border-4 border-black shadow-[6px_6px_0px_#000] transform active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all text-xl uppercase">🔍 Hint!</button>
+                    <button id="next-btn" onclick="nextWord()" class="hidden w-full bg-[#b9fbc0] hover:bg-[#a8e6cf] text-black font-black py-4 rounded-2xl border-4 border-black shadow-[6px_6px_0px_#000] transform active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all text-xl uppercase">Volgende →</button>
+                </div>
+            </div>
+
+            <div id="mnemonic-area" class="mt-8 space-y-4 hidden">
+                <div class="speech-bubble p-6 shadow-lg relative">
+                    <p class="font-bold text-lg mb-2 text-pink-600">💡 Tip voor dit woord:</p>
+                    <div class="space-y-3">
+                        <p id="mnemonic-text-nl" class="text-gray-800 font-medium border-l-4 border-yellow-400 pl-3"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Klaar Scherm -->
+        <div id="finish-screen" class="hidden text-center py-12">
+            <div class="inline-block bg-white p-8 rounded-full manga-border mb-8 animate-bounce relative">
+                <span class="text-8xl">👑</span>
+            </div>
+            <h2 class="text-5xl font-black text-gray-800 mb-4 italic">SUGOI! 🎊</h2>
+            <p class="text-xl text-gray-600 mb-10 font-medium">Je hebt alle 10 woorden in deze categorie geleerd!</p>
+            <button onclick="showMenu()" class="bg-[#ffafcc] text-black border-4 border-black font-black px-12 py-5 rounded-3xl hover:bg-[#ff85a1] transition-all shadow-[8px_8px_0px_#000] text-2xl uppercase">Terug naar Menu</button>
+        </div>
+    </main>
+
+    <script>
+        const alphabetData = [
+            { char: 'ア', romaji: 'a', nl: 'De hoek van een grote letter "A".', en: 'The corner of a capital "A".' },
+            { char: 'イ', romaji: 'i', nl: 'Een schuinedrukte letter "i".', en: 'A leaning letter "i".' },
+            { char: 'ウ', romaji: 'u', nl: 'Iemand die iets "U"mhoog tilt.', en: 'Someone lifting something "U"p.' },
+            { char: 'エ', romaji: 'e', nl: 'Balken van een "E"ngineer.', en: 'I-beams for an "E"ngineer.' },
+            { char: 'オ', romaji: 'o', nl: 'Een renner bij de "O"lympische spelen.', en: 'An "O"lympic runner.' },
+            { char: 'カ', romaji: 'ka', nl: 'Een "Ka"yak peddel.', en: 'A "Ka"yak paddle.' },
+            { char: 'キ', romaji: 'ki', nl: 'Een ouderwetse sleutel ("Key").', en: 'An old-fashioned "Key".' },
+            { char: 'ク', romaji: 'ku', nl: 'De snavel van een "Ku"iken.', en: 'The beak of a "Coo"koo bird.' },
+            { char: 'ケ', romaji: 'ke', nl: 'De rand van een "Ke"tel.', en: 'The edge of a "Ke"ttle.' },
+            { char: 'コ', romaji: 'ko', nl: 'Twee hoeken van een "Ko"ffertje.', en: 'Two corners of a "Co"ner.' },
+            { char: 'サ', romaji: 'sa', nl: 'Drie strepen voor een "Sa"muraizwaard.', en: 'Three strokes for a "Sa"murai sword.' },
+            { char: 'シ', romaji: 'shi', nl: 'Twee ogen en een mond: "She" is smiling.', en: 'Two eyes and a smile: "She" is happy.' },
+            { char: 'ス', romaji: 'su', nl: 'Een hanger voor een "Su"it (pak).', en: 'A hanger for a "Su"it.' },
+            { char: 'セ', romaji: 'se', nl: 'Een "Se"tje stoelen.', en: 'A "Se"t of chairs.' },
+            { char: 'ソ', romaji: 'so', nl: 'Naald en draad voor "So"wing (naaien).', en: 'Needle and thread for "Se"wing.' },
+            { char: 'タ', romaji: 'ta', nl: 'Een "Ta"fel met een schuine poot.', en: 'A "Ta"ble with a slanted leg.' },
+            { char: 'チ', romaji: 'chi', nl: 'Een "Cheer"leader.', en: 'A "Cheer"leader.' },
+            { char: 'ツ', romaji: 'tsu', nl: 'Druppels van een "Tsu"nami.', en: 'Splashes from a "Tsu"nami.' },
+            { char: 'テ', romaji: 'te', nl: 'Een "Te"lefoonantenne.', en: 'A "Te"lephone pole.' },
+            { char: 'ト', romaji: 'to', nl: 'Een "To"tempaal.', en: 'A "To"tem pole.' },
+            { char: 'ナ', romaji: 'na', nl: 'Een "Na"ald.', en: 'A "Nu"n holding a cross.' },
+            { char: 'ニ', romaji: 'ni', nl: 'Twee strepen ("ni" is twee).', en: 'Two lines ("ni" means two).' },
+            { char: 'ヌ', romaji: 'nu', nl: 'Stokjes voor "Nu"dels.', en: 'Chopsticks for "Nu"dles.' },
+            { char: 'ネ', romaji: 'ne', nl: 'Een "Ne"t voor vissen.', en: 'A "Ne"t for fishing.' },
+            { char: 'ノ', romaji: 'no', nl: 'Een lange "No"se (neus).', en: 'A long "No"se.' },
+            { char: 'ハ', romaji: 'ha', nl: 'De onderkant van een "Ha"rmonica.', en: 'A "Ha"t or "Ha-ha" mouth.' },
+            { char: 'ヒ', romaji: 'hi', nl: 'Lachen: "Hi hi hi".', en: 'Laughing: "Hee-hee".' },
+            { char: 'フ', romaji: 'fu', nl: 'Een "Fu"it-vlag.', en: 'A "Foo"tball flag.' },
+            { char: 'ヘ', romaji: 'he', nl: 'De top van een "He"uvel.', en: 'The top of a "He"avenly mountain.' },
+            { char: 'ホ', romaji: 'ho', nl: 'Een kerstboom: "Ho ho ho".', en: 'A Christmas tree: "Ho ho ho".' },
+            { char: 'マ', romaji: 'ma', nl: 'Drinkbak voor een "Ma"ultier.', en: 'A drinking trough.' },
+            { char: 'ミ', romaji: 'mi', nl: 'Drie strepen ("mi" van midden).', en: 'Three strokes.' },
+            { char: 'ム', romaji: 'mu', nl: 'Een "Mu"ilezel-kop.', en: 'A "Moo"ing cow.' },
+            { char: 'メ', romaji: 'me', nl: 'Een "X" op een schatkaart.', en: 'An "X" marking metal.' },
+            { char: 'モ', romaji: 'mo', nl: 'Lijkt op meer ("Mo") monitor lijnen.', en: 'More "Mo"nitor lines.' },
+            { char: 'ヤ', romaji: 'ya', nl: 'Een "Ya"cht.', en: 'A "Ya"cht.' },
+            { char: 'ユ', romaji: 'yu', nl: 'Lijkt op een "2" (You are number 2).', en: 'The number "2".' },
+            { char: 'ヨ', romaji: 'yo', nl: 'Een "Yo"-yo.', en: 'A "Yo"-yo.' },
+            { char: 'ラ', romaji: 'ra', nl: 'Een camera op een "Ra"p-statief.', en: 'A camera tripod.' },
+            { char: 'リ', romaji: 'ri', nl: 'Twee strepen als een "Ri"vier.', en: 'A "Ri"ver.' },
+            { char: 'ル', romaji: 'ru', nl: 'Lijkt op "Ru"tes van een weg.', en: 'Road "Roo"ts.' },
+            { char: 'レ', romaji: 're', nl: 'De letter "L" van "Le"tters.', en: 'A "Le"t-down hook.' },
+            { char: 'ロ', romaji: 'ro', nl: 'Een vierkante "Ro"botmond.', en: 'A "Ro"bot mouth.' },
+            { char: 'ワ', romaji: 'wa', nl: 'Een glas "Wa"ter.', en: 'A "Wa"ter glass.' },
+            { char: 'ヲ', romaji: 'wo', nl: 'Een "Wo"lf die huilt.', en: 'A "Wo"lf howling.' },
+            { char: 'ン', romaji: 'n', nl: 'Een oog dat "n"et dichtvalt.', en: 'One eye shut for "n"ight.' }
+        ];
+
+        const wordData = {
+            signs: [
+                { word: 'ラーメン', romaji: ['ra', 'ー', 'me', 'n'], translation: 'Ramen', nl: 'Het beroemdste uithangbord! De "ー" rekt de "ra" klank op.' },
+                { word: 'ホテル', romaji: ['ho', 'te', 'ru'], translation: 'Hotel', nl: 'Zie je vaak op grote gebouwen. Bijna hetzelfde als bij ons.' },
+                { word: 'トイレ', romaji: ['to', 'i', 're'], translation: 'Toilet', nl: 'Essentieel! Zoek dit bordje als je hoge nood hebt.' },
+                { word: 'タクシー', romaji: ['ta', 'ku', 'shi', 'ー'], translation: 'Taxi', nl: 'Bij treinstations zie je de Taxi-standplaats altijd zo staan.' },
+                { word: 'ドラッグストア', romaji: ['do', 'ra', 'ggu', 'su', 'to', 'a'], translation: 'Drogist', nl: 'Overal in steden als Tokyo. Ze verkopen alles!' },
+                { word: 'パーキング', romaji: ['pa', 'ー', 'ki', 'n', 'gu'], translation: 'Parkeren', nl: 'Vaak afgekort met een grote letter P op een bord.' },
+                { word: 'ビル', romaji: ['bi', 'ru'], translation: 'Gebouw', nl: 'Kort voor "building". Je ziet het in namen van wolkenkrabbers.' },
+                { word: 'カラオケ', romaji: ['ka', 'ra', 'o', 'ke'], translation: 'Karaoke', nl: 'Felle neonletters die je uitnodigen om te zingen!' },
+                { word: 'バス', romaji: ['ba', 'su'], translation: 'Bus', nl: 'Staat vaak op het wegdek of bij haltes geschreven.' },
+                { word: 'レジ', romaji: ['re', 'ji'], translation: 'Kassa', nl: 'Kort voor "register". Volg dit bordje om te betalen.' }
+            ],
+            basic: [
+                { word: 'ポテト', romaji: ['po', 'te', 'to'], translation: 'Patat', nl: 'Bestel dit bij de McDonald\'s (of Makku!).' },
+                { word: 'パン', romaji: ['pa', 'n'], translation: 'Brood', nl: 'Komt van het Portugese woord voor brood.' },
+                { word: 'サラダ', romaji: ['sa', 'ra', 'da'], translation: 'Salade', nl: 'Gezond eten, geschreven in drie simpele tekens.' },
+                { word: 'カレー', romaji: ['ka', 're', 'ー'], translation: 'Curry', nl: 'Japanse curry is super populair!' },
+                { word: 'コーヒー', romaji: ['ko', 'ー', 'hi', 'ー'], translation: 'Koffie', nl: 'Twee keer een lange klank: kooo-hiii.' },
+                { word: 'ケーキ', romaji: ['ke', 'ー', 'ki'], translation: 'Taart', nl: 'Ziet er lekker uit, toch? Ke-ki.' },
+                { word: 'アイス', romaji: ['a', 'i', 'su'], translation: 'Ijs', nl: 'Kort voor "Ice cream".' },
+                { word: 'チーズ', romaji: ['chi', 'ー', 'zu'], translation: 'Kaas', nl: 'Zeg "cheeeeese" voor de foto!' },
+                { word: 'チョコ', romaji: ['cho', 'ko'], translation: 'Chocola', nl: 'Kort en krachtig: Cho-ko.' },
+                { word: 'ジュース', romaji: ['ju', 'ー', 'su'], translation: 'Sap', nl: 'Voor alle soorten fruitdrankjes.' }
+            ],
+            lifestyle: [
+                { word: 'スマホ', romaji: ['su', 'ma', 'ho'], translation: 'Smartphone', nl: 'In Japan zegt niemand "smartphone", alleen "sumaho".' },
+                { word: 'コンビニ', romaji: ['ko', 'n', 'bi', 'ni'], translation: 'Buurtwinkel', nl: 'De 7-Eleven of Lawson om de hoek!' },
+                { word: 'カメラ', romaji: ['ka', 'me', 'ra'], translation: 'Camera', nl: 'Japan staat bekend om zijn goede camera\'s.' },
+                { word: 'ノート', romaji: ['no', 'ー', 'to'], translation: 'Schrift / Notebook', nl: 'Voor op school of werk.' },
+                { word: 'テレビ', romaji: ['te', 're', 'bi'], translation: 'Televisie', nl: 'Kijk je favoriete anime op de Terebi.' },
+                { word: 'パソコン', romaji: ['pa', 'so', 'ko', 'n'], translation: 'PC / Laptop', nl: 'Kort voor "Personal Computer".' },
+                { word: 'アニメ', romaji: ['a', 'ni', 'me'], translation: 'Animatie', nl: 'Dat wist je natuurlijk al! Kort voor "animation".' },
+                { word: 'スポーツ', romaji: ['su', 'po', 'ー', 'tsu'], translation: 'Sport', nl: 'Voetbal, honkbal, noem maar op!' },
+                { word: 'プレゼント', romaji: ['pu', 're', 'ze', 'n', 'to'], translation: 'Cadeau', nl: 'Iemand verrassen met een presentje.' },
+                { word: 'ニュース', romaji: ['nyu', 'ー', 'su'], translation: 'Nieuws', nl: 'Wat gebeurt er vandaag in de wereld?' }
+            ],
+            dakuten: [
+                { word: 'コーラ', romaji: ['ko', 'ー', 'ra'], translation: 'Cola', nl: 'Simpel en verfrissend.' },
+                { word: 'ピザ', romaji: ['pi', 'za'], translation: 'Pizza', nl: 'De "pi" heeft een rondje (maru), de "za" heeft streepjes (dakuten).' },
+                { word: 'ビデオ', romaji: ['bi', 'de', 'o'], translation: 'Video', nl: 'Een wat ouder woord, maar nog steeds handig.' },
+                { word: 'ドア', romaji: ['do', 'a'], translation: 'Deur', nl: 'De "to" van totempaal wordt een "do" met streepjes.' },
+                { word: 'ダンス', romaji: ['da', 'n', 'su'], translation: 'Dans', nl: 'Lekker bewegen op de muziek!' },
+                { word: 'ガス', romaji: ['ga', 'su'], translation: 'Gas', nl: 'Bijvoorbeeld voor het fornuis.' },
+                { word: 'ベッド', romaji: ['be', 'ddo'], translation: 'Bed', nl: 'Let op de kleine "tsu", die maakt de "d" klank kort en krachtig.' },
+                { word: 'バッグ', romaji: ['ba', 'ggu'], translation: 'Tas', nl: 'Van het Engelse "bag".' },
+                { word: 'デザート', romaji: ['de', 'za', 'ー', 'to'], translation: 'Toetje', nl: 'Heerlijk na het eten!' },
+                { word: 'ズボン', romaji: ['zu', 'bo', 'n'], translation: 'Broek', nl: 'Dit woord komt oorspronkelijk uit het Frans!' }
+            ],
+            combo: [
+                { word: 'シャツ', romaji: ['sha', 'tsu'], translation: 'Overhemd', nl: 'Kleine "ya" + "shi" = Sha.' },
+                { word: 'メニュー', romaji: ['me', 'nyu', 'ー'], translation: 'Menu', nl: 'Vraag hiernaar in het restaurant.' },
+                { word: 'ショック', romaji: ['sho', 'kku'], translation: 'Schok', nl: 'Als je ergens van schrikt!' },
+                { word: 'キャンプ', romaji: ['kyame', 'n', 'pu'], translation: 'Kamperen', nl: 'Lekker slapen in een tentje.' },
+                { word: 'キッチン', romaji: ['ki', 'cchi', 'n'], translation: 'Keuken', nl: 'Waar het eten wordt gemaakt.' },
+                { word: 'チャンス', romaji: ['cha', 'n', 'su'], translation: 'Kans', nl: 'Grijp je kans!' },
+                { word: 'シャンプー', romaji: ['sha', 'n', 'pu', 'ー'], translation: 'Shampoo', nl: 'Voor glanzend schoon haar.' },
+                { word: 'リュック', romaji: ['ryu', 'kku'], translation: 'Rugzak', nl: 'Handig voor op reis.' },
+                { word: 'ジョギング', romaji: ['jo', 'gi', 'n', 'gu'], translation: 'Joggen', nl: 'Lekker hardlopen in het park.' },
+                { word: 'ミルク', romaji: ['mi', 'ru', 'ku'], translation: 'Melk', nl: 'Soms ook "gyunyu" genoemd, maar "miruku" is heel gewoon.' }
+            ]
+        };
+
+        let currentModule = [];
+        let currentIndex = 0;
+        let currentLetterStep = 0;
+
+        const alphabetContainer = document.getElementById('alphabet-container');
+        alphabetData.forEach(item => {
+            const btn = document.createElement('button');
+            btn.className = "char-card japanese-font bg-white border-2 border-black/10 p-2 rounded-xl text-xl font-black shadow-sm flex items-center justify-center h-12";
+            btn.innerText = item.char;
+            btn.onclick = () => showDetail(item);
+            alphabetContainer.appendChild(btn);
+        });
+
+        function showDetail(item) {
+            const detail = document.getElementById('char-detail');
+            detail.classList.remove('hidden');
+            document.getElementById('detail-char').innerText = item.char;
+            document.getElementById('detail-romaji').innerText = item.romaji;
+            document.getElementById('detail-mnemonic-nl').innerText = item.nl;
+            document.getElementById('detail-mnemonic-en').innerText = item.en;
+            detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function showMenu() {
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('practice-module').classList.add('hidden');
+            document.getElementById('alphabet-module').classList.add('hidden');
+            document.getElementById('finish-screen').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAlphabet() {
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('alphabet-module').classList.remove('hidden');
+            document.getElementById('char-detail').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function startModule(moduleId) {
+            currentModule = [...wordData[moduleId]];
+            // We pakken er 10 of minder als de lijst korter is
+            currentModule = currentModule.slice(0, 10).sort(() => Math.random() - 0.5);
+            currentIndex = 0;
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('practice-module').classList.remove('hidden');
+            loadWord();
+        }
+
+        function loadWord() {
+            const data = currentModule[currentIndex];
+            currentLetterStep = 0;
+            document.getElementById('katakana-word').innerText = data.word;
+            document.getElementById('translation-text').innerText = data.translation;
+            document.getElementById('mnemonic-text-nl').innerText = data.nl;
+            document.getElementById('mnemonic-area').classList.add('hidden');
+            document.getElementById('romaji-container').innerHTML = '';
+            document.getElementById('translation-container').classList.add('opacity-0', 'translate-y-4');
+            document.getElementById('reveal-btn').classList.remove('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+            document.getElementById('progress-text').innerText = `${currentIndex + 1} / ${currentModule.length}`;
+            
+            data.romaji.forEach(() => {
+                const span = document.createElement('span');
+                span.className = "px-3 md:px-4 py-2 bg-gray-100 rounded-xl text-lg md:text-xl font-black text-gray-300 border-2 border-black/10 min-w-[40px] md:min-w-[50px] flex items-center justify-center";
+                span.innerText = "?";
+                document.getElementById('romaji-container').appendChild(span);
+            });
+        }
+
+        function revealNext() {
+            const data = currentModule[currentIndex];
+            const containers = document.getElementById('romaji-container').children;
+            if (currentLetterStep < data.romaji.length) {
+                containers[currentLetterStep].innerText = data.romaji[currentLetterStep];
+                containers[currentLetterStep].classList.remove('text-gray-300', 'bg-gray-100');
+                containers[currentLetterStep].classList.add('text-black', 'bg-yellow-200', 'border-black', 'shadow-[2px_2px_0px_#000]', 'animate-pop');
+                currentLetterStep++;
+            }
+            if (currentLetterStep === data.romaji.length) {
+                document.getElementById('translation-container').classList.remove('opacity-0', 'translate-y-4');
+                document.getElementById('mnemonic-area').classList.remove('hidden');
+                document.getElementById('reveal-btn').classList.add('hidden');
+                document.getElementById('next-btn').classList.remove('hidden');
+            }
+        }
+
+        function nextWord() {
+            currentIndex++;
+            if (currentIndex < currentModule.length) {
+                loadWord();
+            } else {
+                document.getElementById('practice-module').classList.add('hidden');
+                document.getElementById('finish-screen').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
